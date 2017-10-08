@@ -41,7 +41,8 @@
 ;; HOOKS
 
 (add-hook 'find-file-hook 'auto-insert)
-(add-hook 'dired-mode-hook (lambda () (local-set-key (kbd "/") 'find-dired)))
+(add-hook 'dired-mode-hook
+	  (lambda () (local-set-key (kbd "/") 'find-dired)))
 
 ;; ORG-MODE
 
@@ -80,8 +81,6 @@ DEADLINE: %^t")))
  kept-old-versions 2
  version-control t       ; use versioned backups
  auto-save-file-name-transforms '((".*" "~/.emacs.d/backup/" t))
- ;; create-lockfiles nil
- ;; initial-buffer-choice "~/notes.org"
  auto-revert-interval 5)
 
 (defun cjm-insert-timestamp ()
