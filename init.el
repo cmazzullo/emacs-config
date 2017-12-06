@@ -16,7 +16,7 @@
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.q
 
 ;;; Commentary:
 
@@ -25,56 +25,12 @@
 
 ;;; Code:
 
-
 ;; PACKAGES ;;
 
-(add-to-list 'custom-theme-load-path "~/projects/emacs-themes")
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'load-path "~/local/share/emacs/site-lisp")
 (package-initialize) 			; removes the need for `require`s
-
-
-;; BINDINGS ;;
-
-;; (global-set-key (kbd "<f5>") 'recompile)
-;; (global-set-key (kbd "C-c e") 'compile)
-(global-set-key (kbd "M-o") 'other-window)
-(global-set-key (kbd "C-c r") 'revert-buffer)
-(global-set-key (kbd "C-c s") 'shell)
-(global-set-key (kbd "C-c l") 'org-store-link)
-(global-set-key (kbd "C-c c") 'org-capture)
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c b") 'org-iswitchb)
-
-
-;; ORG-MODE ;;
-
-(setq org-src-fontify-natively t)
-(setq org-return-follows-link t)
-(setq org-refile-targets ;; Allows entries to be refiled to subheadings 3 deep
-      '((nil . (:maxlevel . 3))))
-(setq org-refile-use-outline-path t) ;; List subheadings hierarchically
-(setq org-outline-path-complete-in-steps t) ;; Don't flood the completion window
-
-(setq org-capture-templates ;; Generic TODO-adding template
-      '(("a" "TODO task format" entry
-         (file "~/notes.org")
-         "* TODO %?
-SCHEDULED: %U
-DEADLINE: %^t")))
-
-(setq org-agenda-include-diary t)
-(setq org-agenda-custom-commands
-      '(("c" "TODOs + weekly"
-	 ((agenda "")
-	  (todo)))))
-(setq org-default-notes-file "~/notes.org")
-(setq org-todo-keywords '((sequence "TODO" "|" "DONE" "CANCELLED")))
-(setq org-todo-keyword-faces '(("CANCELLED" . "grey")))
-(setq org-enforce-todo-dependencies t)
-(setq org-log-done 'time) ;; Add a timestamp a task is marked DONE
-(setq org-agenda-files '("~/notes.org"))
 
 
 ;; UTILITY ;;
@@ -99,8 +55,8 @@ DEADLINE: %^t")))
 
 (ido-mode)
 (ido-everywhere t)
-(setq ido-use-url-at-point t)
-(setq ido-use-filename-at-point 'guess)
+(setq ido-use-url-at-point t
+      ido-use-filename-at-point 'guess)
 (global-prettify-symbols-mode)
 (winner-mode) ; Allow undo-ing window operations
 (display-time-mode 1)
@@ -112,20 +68,34 @@ DEADLINE: %^t")))
 (show-paren-mode)
 (put 'narrow-to-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
-(add-to-list 'write-file-functions 'delete-trailing-whitespace)
-
-(add-hook 'prog-mode-hook 'linum-mode)
 (add-hook 'proced-mode-hook ; Use proced as a `top` replacement
-	  '(lambda () (proced-toggle-auto-update 1)))
 (add-hook 'find-file-hook 'auto-insert)
 (add-hook 'dired-mode-hook
 	  (lambda () (local-set-key (kbd "/") 'find-dired)))
+	  '(lambda () (proced-toggle-auto-update 1)))
+(add-hook 'prog-mode-hook 'linum-mode)
+
+
+;; BINDINGS ;;
+
+(global-set-key (kbd "M-o") 'other-window)
+(global-set-key (kbd "C-c r") 'revert-buffer)
+(global-set-key (kbd "C-c s") 'shell)
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c b") 'org-iswitchb)
+(global-set-key (kbd "C-z") 'nil) ; God I hate this binding
 
 
 ;; PYTHON ;;
 
+(require 'python)
 (setq python-skeleton-autoinsert t)
-(setq python-shell-completion-native-enable nil)
+
+(setq python-shell-interpreter "python3.5")
+(add-to-list 'python-shell-completion-native-disabled-interpreters "python3.5")
+;; (setq python-shell-completion-native-enable nil) ; windows hack
 
 ;; Virtual Envs subsection
 (venv-initialize-interactive-shells) ;; interactive shell support
@@ -137,21 +107,6 @@ DEADLINE: %^t")))
 ;; Needed b/c our Django template files have the `.html` extension instead of `.djhtml`
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (setq web-mode-engines-alist '(("django" . "\\.html?\\'")))
-
-
-;; OCAML ;;
-(load "/home/chris/.opam/4.05.0/share/emacs/site-lisp/tuareg-site-file")
-
-
-;; C ;;
-;; Prettification
-(add-hook 'c-mode-hook
-	  (lambda ()
-	    (push '("!=" . ?≠) prettify-symbols-alist)
-	    (push '("<=" . ?≤) prettify-symbols-alist)
-	    (push '(">=" . ?≥) prettify-symbols-alist)
-	    (push '("->" . ?→) prettify-symbols-alist)))
-
 
 ;; TODO: Move most of this section into sass-mode.el
 ;; SASS-MODE ;;
@@ -230,32 +185,50 @@ DEADLINE: %^t")))
 ;;        "options notes;" ?\n ?\n
 ;;        "ods rtf close;" ?\n ?\n )))
 
-
 ;; (define-abbrev sass-mode-abbrev-table "tab" "" 'sas-tabulate)
 ;; (add-hook 'sass-mode-hook 'auto-insert)
 ;; (add-hook 'sass-output-mode-hook 'view-mode)
 ;; (add-hook 'sass-output-mode-hook 'auto-revert-mode)
 
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (inkpot)))
- '(custom-safe-themes
-   (quote
-    ("b3a934f107ae70b13202eb1d7e3336752a0644c08a16aa4e2b8fb72cf4bdce0c" default)))
- '(package-selected-packages
-   (quote
-    (inkpot-theme rust-mode erlang tuareg haskell-mode paredit)))
- '(send-mail-function (quote smtpmail-send-it))
- '(smtpmail-smtp-server "smtp.gmail.com")
- '(smtpmail-smtp-service 25))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-warning ((t (:foreground "#409090" :underline nil))))
- '(region ((t (:background "light goldenrod" :distant-foreground "gtk_selection_fg_color")))))
+;; HOOKS
+
+(add-to-list 'write-file-functions 'delete-trailing-whitespace)
+(add-hook 'find-file-hook 'auto-insert)
+(add-hook 'dired-mode-hook
+	  (lambda () (local-set-key (kbd "/") 'find-dired)))
+
+
+;; ORG-MODE ;;
+
+(setq org-drawers '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "RAW")
+      org-agenda-include-diary t
+      org-agenda-custom-commands '(("c" "TODOs + weekly" ((agenda "") (todo))))
+      org-agenda-files '("~/notes.org")
+      org-default-notes-file "~/notes.org"
+      org-todo-keywords '((sequence "TODO" "|" "DONE" "CANCELLED"))
+      org-todo-keyword-faces '(("CANCELLED" . "grey"))
+      org-enforce-todo-dependencies t
+      org-log-done 'time ;; Add a timestamp a task is marked DONE
+      org-agenda-files '("~/notes.org")
+      org-src-fontify-natively t
+      org-return-follows-link t
+      org-refile-targets  '((nil . (:maxlevel . 3))) ;;Allows entries to be refiled to subheadings 3 deep
+      org-refile-use-outline-path t ;; List subheadings hierarchically
+      org-outline-path-complete-in-steps t ;; Don't flood the completion window
+      org-capture-templates ;; Generic TODO-adding template
+      '(("a" "TODO task format" entry (file "~/notes.org") "* TODO %? SCHEDULED: %U DEADLINE: %^t")))
+
+
+;; OCAML ;;
+(load "/home/chris/.opam/4.05.0/share/emacs/site-lisp/tuareg-site-file")
+
+
+;; C ;;
+;; Prettification
+(add-hook 'c-mode-hook
+	  (lambda ()
+	    (push '("!=" . ?≠) prettify-symbols-alist)
+	    (push '("<=" . ?≤) prettify-symbols-alist)
+	    (push '(">=" . ?≥) prettify-symbols-alist)
+	    (push '("->" . ?→) prettify-symbols-alist)))
