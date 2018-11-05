@@ -28,9 +28,10 @@
 ;; PACKAGES ;;
 
 (require 'package)
+(package-initialize) ; removes the need for most `require`s
+
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'load-path "~/local/share/emacs/site-lisp")
-(package-initialize) ; removes the need for `require`s
 (setq package-selected-packages '(elpy
 				  flycheck-pyflakes
 				  virtualenvwrapper
@@ -98,7 +99,6 @@
 
 ;; PYTHON ;;
 
-(require 'python)
 (setq python-skeleton-autoinsert t)
 (elpy-enable)
 (setq whitespace-style '(face tabs lines-tail)) ; highlight long lines
