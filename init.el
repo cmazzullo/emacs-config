@@ -143,8 +143,9 @@
       org-agenda-custom-commands '(("c" "TODOs + weekly" ((agenda "") (todo))))
       org-agenda-files '("~/notes.org")
       org-default-notes-file "~/notes.org"
-      org-todo-keywords '((sequence "TODO" "|" "DONE" "CANCELLED" "DEFERRED"))
-      org-todo-keyword-faces '(("CANCELLED" . "grey"))
+      org-todo-keywords '((sequence "TODO" "DEFERRED" "|" "DONE" "CANCELLED"))
+      org-todo-keyword-faces '(("CANCELLED" . "grey")
+			       ("DEFERRED" . "bold"))
       org-enforce-todo-dependencies t
       org-log-done 'time ;; Add a timestamp a task is marked DONE
       org-agenda-files '("~/notes.org")
