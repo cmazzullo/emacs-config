@@ -40,6 +40,7 @@
 				  magit
 				  web-mode
 				  php-mode))
+(package-install-selected-packages)	; Auto-installs selected packages
 
 
 ;; UTILITY ;;
