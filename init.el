@@ -39,7 +39,8 @@
 				  golden-ratio
 				  magit
 				  web-mode
-				  php-mode))
+				  php-mode
+				  nix-mode))
 (package-install-selected-packages)	; Auto-installs selected packages
 
 
