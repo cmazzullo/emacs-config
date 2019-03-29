@@ -146,8 +146,8 @@
       org-agenda-files '("~/notes.org")
       org-default-notes-file "~/notes.org"
       org-todo-keywords '((sequence "TODO" "DEFERRED" "|" "DONE" "CANCELLED"))
-      org-todo-keyword-faces '(("CANCELLED" . "grey")
-			       ("DEFERRED" . "bold"))
+      org-todo-keyword-faces '(("CANCELLED" . "slategrey")
+			       ("DEFERRED" . "black"))
       org-enforce-todo-dependencies t
       org-log-done 'time ;; Add a timestamp a task is marked DONE
       org-agenda-files '("~/notes.org")
