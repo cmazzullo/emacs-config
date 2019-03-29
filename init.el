@@ -102,8 +102,12 @@
 ;; PYTHON ;;
 
 (setq python-skeleton-autoinsert t)
-(elpy-enable)
 (setq whitespace-style '(face tabs lines-tail)) ; highlight long lines
+
+(elpy-enable)
+(add-hook 'elpy-mode-hook
+	  (lambda ()
+	    (define-key elpy-mode-map (kbd "M-q") 'elpy-black-fix-code)))
 
 ;; Virtual Envs subsection
 (venv-initialize-interactive-shells) ;; interactive shell support
