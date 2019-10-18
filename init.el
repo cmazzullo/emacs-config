@@ -137,27 +137,25 @@
 
 (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 (add-hook 'find-file-hook 'auto-insert)
-(add-hook 'find-file-hook 'auto-insert)
 (add-hook 'python-mode-hook 'whitespace-mode)
 (add-hook 'proced-mode '(lambda () (proced-toggle-auto-update t)))
 
 ;; ORG-MODE ;;
 
-(setq org-startup-indented t
+
+(setq org-default-notes-file "~/notes.org"
+      org-agenda-files '(org-default-notes-file)
+      org-capture-templates '(("a" "TODO task format" entry (file org-default-notes-file) "* TODO %? SCHEDULED: %U DEADLINE: %^t")) org-startup-indented t
       org-drawers '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "RAW")
       org-agenda-include-diary t
       org-agenda-custom-commands '(("c" "TODOs + weekly" ((agenda "") (todo))))
-      org-agenda-files '("~/notes.org")
-      org-default-notes-file "~/notes.org"
       org-todo-keywords '((sequence "TODO" "DEFERRED" "|" "DONE" "CANCELLED"))
       org-todo-keyword-faces '(("CANCELLED" . "slategrey")
 			       ("DEFERRED" . "black"))
       org-enforce-todo-dependencies t
       org-log-done 'time ;; Add a timestamp a task is marked DONE
-      org-agenda-files '("~/notes.org")
       org-src-fontify-natively t
       org-return-follows-link t
       org-refile-targets  '((nil . (:maxlevel . 3))) ;;Allows entries to be refiled to subheadings 3 deep
       org-refile-use-outline-path t ;; List subheadings hierarchically
-      org-outline-path-complete-in-steps t ;; Don't flood the completion window
-      org-capture-templates '(("a" "TODO task format" entry (file "~/notes.org") "* TODO %? SCHEDULED: %U DEADLINE: %^t")))
+      org-outline-path-complete-in-steps t) ;; Don't flood the completion window
