@@ -51,7 +51,7 @@
       create-lockfiles nil
       inhibit-startup-screen t
       eshell-banner-message ""
-      ido-auto-merge-work-directories-length -1
+      ido-auto-merge-work-directories-length -1 ; disable auto directory switching in IDO
       ido-use-filename-at-point 'guess  ; Auto-ffap
       inhibit-eol-conversion nil)
 
