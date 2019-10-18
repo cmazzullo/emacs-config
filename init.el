@@ -86,7 +86,6 @@
 
 (global-set-key (kbd "M-o") 'other-window)
 (global-set-key (kbd "C-c r") 'revert-buffer)
-(global-set-key (kbd "C-c s") 'eshell)
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c c") 'org-capture)
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -97,6 +96,11 @@
 
 (put 'narrow-to-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
+; Use eshell on windows systems, normal shell on Linux:
+(if (eq system-type 'windows-nt)
+    (global-set-key (kbd "C-c s") 'eshell)
+    (global-set-key (kbd "C-c s") 'shell))
 
 
 ;; PYTHON ;;
