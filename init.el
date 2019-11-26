@@ -28,7 +28,6 @@
 ;; PACKAGES ;;
 
 (require 'package)
-(package-initialize) ; removes the need for most `require`s
 
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'load-path "~/local/share/emacs/site-lisp")
@@ -41,6 +40,9 @@
 				  web-mode
 				  php-mode
 				  nix-mode))
+(package-initialize) ; removes the need for most `require`s
+(unless package-archive-contents
+  (package-refresh-contents))
 (package-install-selected-packages)	; Auto-installs selected packages
 
 
@@ -103,6 +105,12 @@
     (global-set-key (kbd "C-c s") 'shell))
 
 
+;; MAGIT ;;
+
+;; Pop over to file in another window when looking at a magit diff
+(setq magit-display-file-buffer-function 'magit-display-file-buffer-other-window)
+
+
 ;; PYTHON ;;
 
 (setq python-skeleton-autoinsert t)
@@ -149,7 +157,8 @@
 
 (setq org-default-notes-file "~/notes.org"
       org-agenda-files '(org-default-notes-file)
-      org-capture-templates '(("a" "TODO task format" entry (file org-default-notes-file) "* TODO %? SCHEDULED: %U DEADLINE: %^t")) org-startup-indented t
+      org-capture-templates '(("a" "TODO task format" entry (file org-default-notes-file) "* TODO %? SCHEDULED: %U DEADLINE: %^t"))
+      org-startup-indented t
       org-drawers '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "RAW")
       org-agenda-include-diary t
       org-agenda-custom-commands '(("c" "TODOs + weekly" ((agenda "") (todo))))
@@ -159,7 +168,6 @@
       org-enforce-todo-dependencies t
       org-log-done 'time ;; Add a timestamp a task is marked DONE
       org-src-fontify-natively t
-      org-return-follows-link t
       org-refile-targets  '((nil . (:maxlevel . 3))) ;;Allows entries to be refiled to subheadings 3 deep
       org-refile-use-outline-path t ;; List subheadings hierarchically
       org-outline-path-complete-in-steps t) ;; Don't flood the completion window
