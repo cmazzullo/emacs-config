@@ -84,7 +84,7 @@
 
 ;; BINDINGS ;;
 
-(global-set-key (kbd "M-o") 'other-window)
+(global-set-key (kbd "M-o") 'other-window) ; Much more convenient window-switching
 (global-set-key (kbd "C-c r") 'revert-buffer)
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c c") 'org-capture)
@@ -93,14 +93,15 @@
 (global-set-key (kbd "C-z") 'nil) ; God I hate this binding
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+(global-set-key (kbd "C-x C-b") 'ibuffer) ; Ibuffer is a straight upgrade from stock buffer-list
 
 (put 'narrow-to-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-; Use eshell on windows systems, normal shell on Linux:
-(if (eq system-type 'windows-nt)
+(if (eq system-type 'windows-nt) ; Use eshell on windows systems, normal shell on Linux
     (global-set-key (kbd "C-c s") 'eshell)
-    (global-set-key (kbd "C-c s") 'shell))
+  (global-set-key (kbd "C-c s") 'shell)
+  (setenv "PAGER" "cat"))
 
 
 ;; PYTHON ;;
@@ -139,13 +140,16 @@
 
 ;; HOOKS
 
+; Clean trailing whitespace before saving:
 (add-to-list 'write-file-functions 'delete-trailing-whitespace)
-(add-hook 'find-file-hook 'auto-insert)
+
 (add-hook 'python-mode-hook 'whitespace-mode)
+
+; Makes proced-mode auto-update like "top":
 (add-hook 'proced-mode '(lambda () (proced-toggle-auto-update t)))
 
-;; ORG-MODE ;;
 
+;; ORG-MODE ;;
 
 (setq org-default-notes-file "~/notes.org"
       org-agenda-files '(org-default-notes-file)
@@ -157,9 +161,10 @@
       org-todo-keyword-faces '(("CANCELLED" . "slategrey")
 			       ("DEFERRED" . "black"))
       org-enforce-todo-dependencies t
-      org-log-done 'time ;; Add a timestamp a task is marked DONE
-      org-src-fontify-natively t
+      org-log-done 'time ; Add a timestamp a task is marked DONE
+      org-src-fontify-natively t ; Syntax highlighting in source code blocks
       org-return-follows-link t
-      org-refile-targets  '((nil . (:maxlevel . 3))) ;;Allows entries to be refiled to subheadings 3 deep
-      org-refile-use-outline-path t ;; List subheadings hierarchically
-      org-outline-path-complete-in-steps t) ;; Don't flood the completion window
+      org-refile-targets  '((nil . (:maxlevel . 3))) ; Allows entries to be refiled to subheadings 3 deep
+      org-refile-use-outline-path t ; List subheadings hierarchically
+      org-outline-path-complete-in-steps t ; Don't flood the completion window
+      org-startup-truncated nil)
