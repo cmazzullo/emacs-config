@@ -86,16 +86,30 @@
 
 ;; BINDINGS ;;
 
-(global-set-key (kbd "M-o") 'other-window) ; Much more convenient window-switching
-(global-set-key (kbd "C-c r") 'revert-buffer)
-(global-set-key (kbd "C-c l") 'org-store-link)
-(global-set-key (kbd "C-c c") 'org-capture)
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c b") 'org-iswitchb)
-(global-set-key (kbd "C-z") 'nil) ; God I hate this binding
-(global-set-key (kbd "C-x g") 'magit-status)
-(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
-(global-set-key (kbd "C-x C-b") 'ibuffer) ; Ibuffer is a straight upgrade from stock buffer-list
+;; I define a minor mode to keep all my key bindings in because this
+;; prevents other modes from clobbering them (e.g. diff-mode would
+;; otherwise clobber my M-o rebinding)
+(defvar my-keys-minor-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "M-o") 'other-window) ; Much more convenient window-switching
+    (define-key map (kbd "C-c r") 'revert-buffer)
+    (define-key map (kbd "C-c l") 'org-store-link)
+    (define-key map (kbd "C-c c") 'org-capture)
+    (define-key map (kbd "C-c a") 'org-agenda)
+    (define-key map (kbd "C-c b") 'org-iswitchb)
+    (define-key map (kbd "C-z") 'nil) ; God I hate this binding
+    (define-key map (kbd "C-x g") 'magit-status)
+    (define-key map (kbd "C-x M-g") 'magit-dispatch-popup)
+    (define-key map (kbd "C-x C-b") 'ibuffer) ; Ibuffer is a straight upgrade from stock buffer-list
+    map)
+  "my-keys-minor-mode keymap.")
+
+(define-minor-mode my-keys-minor-mode
+  "A minor mode so that my key settings override major modes."
+  :init-value t
+  :lighter " my-keys")
+
+(my-keys-minor-mode 1)
 
 (put 'narrow-to-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
