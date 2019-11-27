@@ -43,7 +43,6 @@
 (package-initialize) ; removes the need for most `require`s
 (unless package-archive-contents
   (package-refresh-contents))
-(package-install-selected-packages)	; Auto-installs selected packages
 
 
 ;; UTILITY ;;
