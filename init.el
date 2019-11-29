@@ -54,7 +54,8 @@
       eshell-banner-message ""
       ido-auto-merge-work-directories-length -1 ; disable auto directory switching in IDO
       ido-use-filename-at-point 'guess  ; Auto-ffap
-      inhibit-eol-conversion nil)
+      inhibit-eol-conversion nil
+      search-default-mode t) ; Default to regex search
 
 (require 'zone)
 (zone-when-idle 900) ; Literally necessary
