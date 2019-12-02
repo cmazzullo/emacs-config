@@ -152,8 +152,9 @@
 (defun django-runserver ()
   "Run a django local server for the current project"
   (interactive)
-  (let ((project-root (projectile-project-root)))
-    (run-python (concat "python " project-root "manage.py runserver") nil t)))
+  (let ((server-buffer "django-server")
+	 (cmd (concat "python " (projectile-project-root) "manage.py runserver")))
+    (display-buffer (python-shell-make-comint cmd server-buffer t nil))))
 
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 ;; Needed b/c our Django template files have the `.html` extension instead of `.djhtml`:
@@ -177,7 +178,6 @@
       org-agenda-files '(org-default-notes-file)
       org-capture-templates '(("a" "TODO task format" entry (file org-default-notes-file) "* TODO %? SCHEDULED: %U DEADLINE: %^t"))
       org-startup-indented t
-      org-drawers '("PROPERTIES" "CLOCK" "LOGBOOK" "RESULTS" "RAW")
       org-agenda-include-diary t
       org-agenda-custom-commands '(("c" "TODOs + weekly" ((agenda "") (todo))))
       org-todo-keywords '((sequence "TODO" "DEFERRED" "|" "DONE" "CANCELLED"))
