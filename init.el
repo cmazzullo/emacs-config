@@ -126,6 +126,12 @@
 (setq magit-display-file-buffer-function 'magit-display-file-buffer-other-window)
 
 
+;; JAVASCRIPT ;;
+
+(setq js-indent-level 2)
+(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js-jsx-mode))
+
+
 ;; PYTHON ;;
 
 (setq python-skeleton-autoinsert t)
