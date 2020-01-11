@@ -169,6 +169,9 @@
 
 ;; HOOKS
 
+(add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+(add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+
 ; Clean trailing whitespace before saving:
 (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 
