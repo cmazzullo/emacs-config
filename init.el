@@ -57,9 +57,6 @@
       inhibit-eol-conversion nil
       search-default-mode t) ; Default to regex search
 
-(require 'zone)
-(zone-when-idle 900) ; Literally necessary
-
 (menu-bar-mode -1) ; Clean up UI
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
