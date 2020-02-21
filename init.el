@@ -32,6 +32,7 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'load-path "~/local/share/emacs/site-lisp")
 (setq package-selected-packages '(elpy
+				  emmet-mode
 				  flycheck-pyflakes
 				  virtualenvwrapper
 				  projectile
@@ -135,9 +136,6 @@
 (setq whitespace-style '(face tabs lines-tail)) ; highlight long lines
 
 (elpy-enable)
-(add-hook 'elpy-mode-hook
-	  (lambda ()
-	    (define-key elpy-mode-map (kbd "M-q") 'elpy-black-fix-code)))
 
 ;; Virtual Envs subsection
 (venv-initialize-interactive-shells) ;; interactive shell support
@@ -159,9 +157,16 @@
 	 (cmd (concat "python " (projectile-project-root) "manage.py runserver")))
     (display-buffer (python-shell-make-comint cmd server-buffer t nil))))
 
+
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 ;; Needed b/c our Django template files have the `.html` extension instead of `.djhtml`:
 (setq web-mode-engines-alist '(("django" . "\\.html?\\'")))
+
+
+;; EMMET ;;
+(add-hook 'sgml-mode-hook 'emmet-mode)
+(add-hook 'web-mode-hook 'emmet-mode)
+(add-hook 'css-mode-hook 'emmet-mode)
 
 
 ;; HOOKS
@@ -186,9 +191,9 @@
       org-startup-indented t
       org-agenda-include-diary t
       org-agenda-custom-commands '(("c" "TODOs + weekly" ((agenda "") (todo))))
-      org-todo-keywords '((sequence "TODO" "DEFERRED" "|" "DONE" "CANCELLED"))
+      org-todo-keywords '((sequence "TODO(t)" "STUCK(s)" "|" "DONE(d)" "CANCELLED(c)"))
       org-todo-keyword-faces '(("CANCELLED" . "slategrey")
-			       ("DEFERRED" . "black"))
+			       ("STUCK" . "black"))
       org-enforce-todo-dependencies t
       org-log-done 'time ; Add a timestamp a task is marked DONE
       org-src-fontify-natively t ; Syntax highlighting in source code blocks
