@@ -32,6 +32,7 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'load-path "~/local/share/emacs/site-lisp")
 (setq package-selected-packages '(elpy
+				  emmet-mode
 				  flycheck-pyflakes
 				  virtualenvwrapper
 				  projectile
@@ -135,6 +136,7 @@
 (setq whitespace-style '(face tabs lines-tail)) ; highlight long lines
 
 (elpy-enable)
+(setq elpy-rpc-timeout 2) ; increase timeout (seconds) for our slow computer
 (add-hook 'elpy-mode-hook
 	  (lambda ()
 	    (define-key elpy-mode-map (kbd "M-q") 'elpy-black-fix-code)))
@@ -159,6 +161,7 @@
 	 (cmd (concat "python " (projectile-project-root) "manage.py runserver")))
     (display-buffer (python-shell-make-comint cmd server-buffer t nil))))
 
+
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 ;; Needed b/c our Django template files have the `.html` extension instead of `.djhtml`:
 (setq web-mode-engines-alist '(("django" . "\\.html?\\'")))
@@ -168,6 +171,7 @@
 
 (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
 (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+(add-hook 'web-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
 
 ; Clean trailing whitespace before saving:
 (add-to-list 'write-file-functions 'delete-trailing-whitespace)
@@ -186,9 +190,9 @@
       org-startup-indented t
       org-agenda-include-diary t
       org-agenda-custom-commands '(("c" "TODOs + weekly" ((agenda "") (todo))))
-      org-todo-keywords '((sequence "TODO" "DEFERRED" "|" "DONE" "CANCELLED"))
+      org-todo-keywords '((sequence "TODO(t)" "STUCK(s)" "|" "DONE(d)" "CANCELLED(c)"))
       org-todo-keyword-faces '(("CANCELLED" . "slategrey")
-			       ("DEFERRED" . "black"))
+			       ("STUCK" . "black"))
       org-enforce-todo-dependencies t
       org-log-done 'time ; Add a timestamp a task is marked DONE
       org-src-fontify-natively t ; Syntax highlighting in source code blocks
