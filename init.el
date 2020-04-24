@@ -196,4 +196,7 @@
       org-refile-targets  '((nil . (:maxlevel . 3))) ; Allows entries to be refiled to subheadings 3 deep
       org-refile-use-outline-path t ; List subheadings hierarchically
       org-outline-path-complete-in-steps t ; Don't flood the completion window
+      org-src-window-setup 'current-window  ;; edit source blocks in the same window
+      org-src-preserve-indentation t  ;; prevents source blocks from indenting their content
+      org-file-apps '((auto-mode . emacs)) ;; Always open org links in emacs (not firefox)
       org-startup-truncated nil)
