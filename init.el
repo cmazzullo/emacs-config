@@ -65,6 +65,9 @@
 (ido-mode)
 (ido-everywhere)
 (golden-ratio-mode)
+(define-advice select-window
+    (:after (window &optional no-record) golden-ratio-resize-window) (golden-ratio) nil)
+
 (projectile-mode)
 (column-number-mode)
 (show-paren-mode)
