@@ -55,8 +55,9 @@
       eshell-banner-message ""
       ido-auto-merge-work-directories-length -1 ; disable auto directory switching in IDO
       ido-use-filename-at-point 'guess  ; Auto-ffap
-      inhibit-eol-conversion nil
-      search-default-mode t) ; Default to regex search
+      search-default-mode t ; Default to regex search
+      bookmark-save-flag 1 ; save bookmarks after every change/new bookmark
+      inhibit-eol-conversion nil)
 
 (menu-bar-mode -1) ; Clean up UI
 (tool-bar-mode -1)
@@ -161,7 +162,7 @@
   "Run a django local server for the current project"
   (interactive)
   (let ((server-buffer "django-server")
-	 (cmd (concat "python " (projectile-project-root) "manage.py runserver")))
+	 (cmd (concat "python -u " (projectile-project-root) "manage.py runserver")))
     (display-buffer (python-shell-make-comint cmd server-buffer t nil))))
 
 
