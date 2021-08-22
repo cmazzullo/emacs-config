@@ -38,9 +38,7 @@
 				  projectile
 				  golden-ratio
 				  magit
-				  web-mode
-				  php-mode
-				  nix-mode))
+				  web-mode))
 (package-initialize) ; removes the need for most `require`s
 (unless package-archive-contents
   (package-refresh-contents))
