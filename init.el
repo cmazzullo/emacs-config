@@ -54,8 +54,9 @@
       inhibit-startup-screen t
       eshell-banner-message ""
       ido-auto-merge-work-directories-length -1 ; disable auto directory switching in IDO
-      ido-use-filename-at-point 'guess  ; Auto-ffap
+      ido-use-filename-at-point 'guess  ; Use find-file-at-point whenever theres a file at point
       inhibit-eol-conversion nil
+      dired-dwim-target t  ; make dired target default to the next dired window (eg to copy files between windows)
       search-default-mode t) ; Default to regex search
 
 (menu-bar-mode -1) ; Clean up UI
