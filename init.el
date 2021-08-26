@@ -38,9 +38,7 @@
 				  projectile
 				  golden-ratio
 				  magit
-				  web-mode
-				  php-mode
-				  nix-mode))
+				  web-mode))
 (package-initialize) ; removes the need for most `require`s
 (unless package-archive-contents
   (package-refresh-contents))
@@ -54,10 +52,11 @@
       inhibit-startup-screen t
       eshell-banner-message ""
       ido-auto-merge-work-directories-length -1 ; disable auto directory switching in IDO
-      ido-use-filename-at-point 'guess  ; Auto-ffap
-      search-default-mode t ; Default to regex search
       bookmark-save-flag 1 ; save bookmarks after every change/new bookmark
-      inhibit-eol-conversion nil)
+      ido-use-filename-at-point 'guess  ; Use find-file-at-point whenever theres a file at point
+      inhibit-eol-conversion nil
+      dired-dwim-target t  ; make dired target default to the next dired window (eg to copy files between windows)
+      search-default-mode t) ; Default to regex search
 
 (menu-bar-mode -1) ; Clean up UI
 (tool-bar-mode -1)
