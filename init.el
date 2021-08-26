@@ -74,6 +74,11 @@
 (show-paren-mode)
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode)) ; Always treat .m as a matlab extension
 
+;; shortcuts for git-grepping file types:
+(mapc (lambda (x) (add-to-list 'grep-files-aliases x))
+      '(("py" . "*.py")
+	("html" . "*.html")
+	("json" . "*.json")))
 
 ;; BACKUP ;;
 
@@ -103,6 +108,7 @@
     (define-key map (kbd "C-x g") 'magit-status)
     (define-key map (kbd "C-x M-g") 'magit-dispatch-popup)
     (define-key map (kbd "C-x C-b") 'ibuffer) ; Ibuffer is a straight upgrade from stock buffer-list
+    (define-key map (kbd "C-c /") 'vc-git-grep)
     map)
   "my-keys-minor-mode keymap.")
 
