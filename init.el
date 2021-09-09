@@ -56,6 +56,7 @@
       ido-use-filename-at-point 'guess  ; Use find-file-at-point whenever theres a file at point
       inhibit-eol-conversion nil
       dired-dwim-target t  ; make dired target default to the next dired window (eg to copy files between windows)
+      dired-isearch-filenames t  ; make isearch only search filenames in dired buffers
       search-default-mode t) ; Default to regex search
 
 (menu-bar-mode -1) ; Clean up UI
