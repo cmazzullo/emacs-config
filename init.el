@@ -37,7 +37,6 @@
 				  virtualenvwrapper
 				  projectile
 				  golden-ratio
-				  magit
 				  web-mode))
 (package-initialize) ; removes the need for most `require`s
 (unless package-archive-contents
@@ -57,6 +56,8 @@
       inhibit-eol-conversion nil
       dired-dwim-target t  ; make dired target default to the next dired window (eg to copy files between windows)
       dired-isearch-filenames t  ; make isearch only search filenames in dired buffers
+      dired-listing-switches "-al --group-directories-first"
+      shr-discard-aria-hidden t  ; don't render "hidden" tags on webpages
       search-default-mode t) ; Default to regex search
 
 (menu-bar-mode -1) ; Clean up UI
@@ -105,8 +106,6 @@
     (define-key map (kbd "C-c a") 'org-agenda)
     (define-key map (kbd "C-c b") 'org-iswitchb)
     (define-key map (kbd "C-z") 'nil) ; God I hate this binding
-    (define-key map (kbd "C-x g") 'magit-status)
-    (define-key map (kbd "C-x M-g") 'magit-dispatch-popup)
     (define-key map (kbd "C-x C-b") 'ibuffer) ; Ibuffer is a straight upgrade from stock buffer-list
     (define-key map (kbd "C-c /") 'vc-git-grep)
     map)
@@ -126,12 +125,6 @@
     (global-set-key (kbd "C-c s") 'eshell)
   (global-set-key (kbd "C-c s") 'shell)
   (setenv "PAGER" "cat"))
-
-
-;; MAGIT ;;
-
-;; Pop over to file in another window when looking at a magit diff
-(setq magit-display-file-buffer-function 'magit-display-file-buffer-other-window)
 
 
 ;; JAVASCRIPT ;;
