@@ -35,7 +35,6 @@
 				  emmet-mode
 				  flycheck-pyflakes
 				  virtualenvwrapper
-				  projectile
 				  golden-ratio
 				  web-mode))
 (package-initialize) ; removes the need for most `require`s
@@ -70,7 +69,6 @@
 (define-advice select-window
     (:after (window &optional no-record) golden-ratio-resize-window) (golden-ratio) nil)
 
-(projectile-mode)
 (column-number-mode)
 (show-paren-mode)
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode)) ; Always treat .m as a matlab extension
@@ -154,14 +152,14 @@
 (defun django-shell ()
   "Run a django shell buffer for the current project"
   (interactive)
-  (let ((project-root (projectile-project-root)))
+  (let ((project-root (vc-root-dir)))
     (run-python (concat "python -i " project-root "manage.py shell") nil t)))
 
 (defun django-runserver ()
   "Run a django local server for the current project"
   (interactive)
   (let ((server-buffer "django-server")
-	 (cmd (concat "python -u " (projectile-project-root) "manage.py runserver")))
+	 (cmd (concat "python -u " (vc-root-dir) "manage.py runserver")))
     (display-buffer (python-shell-make-comint cmd server-buffer t nil))))
 
 
