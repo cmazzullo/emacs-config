@@ -35,7 +35,6 @@
 				  emmet-mode
 				  flycheck-pyflakes
 				  virtualenvwrapper
-				  golden-ratio
 				  web-mode))
 (package-initialize) ; removes the need for most `require`s
 (unless package-archive-contents
@@ -65,9 +64,6 @@
 
 (ido-mode)
 (ido-everywhere)
-(golden-ratio-mode)
-(define-advice select-window
-    (:after (window &optional no-record) golden-ratio-resize-window) (golden-ratio) nil)
 
 (column-number-mode)
 (show-paren-mode)
