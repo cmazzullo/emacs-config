@@ -70,6 +70,7 @@
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode)) ; Always treat .m as a matlab extension
 
 ;; shortcuts for git-grepping file types:
+(require 'grep)
 (mapc (lambda (x) (add-to-list 'grep-files-aliases x))
       '(("py" . "*.py")
 	("html" . "*.html")
