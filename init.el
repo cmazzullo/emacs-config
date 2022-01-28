@@ -25,9 +25,13 @@
 
 ;;; Code:
 
-;; PACKAGES ;;
+;; REQUIRES ;;
 
 (require 'package)
+(require 'grep)
+(require 'vc)
+
+;; PACKAGES ;;
 
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'load-path "~/local/share/emacs/site-lisp")
@@ -70,7 +74,6 @@
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode)) ; Always treat .m as a matlab extension
 
 ;; shortcuts for git-grepping file types:
-(require 'grep)
 (mapc (lambda (x) (add-to-list 'grep-files-aliases x))
       '(("py" . "*.py")
 	("html" . "*.html")
@@ -134,7 +137,8 @@
 (setq whitespace-style '(face tabs lines-tail)) ; highlight long lines
 
 (elpy-enable)
-(setq elpy-rpc-timeout 2) ; increase timeout (seconds) for our slow computer
+(setq elpy-rpc-timeout 3 ; increase timeout (seconds) for our slow computer
+      elpy-rpc-virtualenv-path 'default)
 (add-hook 'elpy-mode-hook
 	  (lambda ()
 	    (define-key elpy-mode-map (kbd "M-q") 'elpy-black-fix-code)))
@@ -191,7 +195,7 @@
       org-todo-keywords '((sequence "TODO(t)" "STUCK(s)" "|" "DONE(d)" "CANCELLED(c)"))
       org-todo-keyword-faces '(("CANCELLED" . "slategrey")
 			       ("STUCK" . "black"))
-      org-enforce-todo-dependencies t
+      org-enforce-todo-dependencies nil	; don't enforce dependencies, it's annoying
       org-log-done 'time ; Add a timestamp a task is marked DONE
       org-src-fontify-natively t ; Syntax highlighting in source code blocks
       org-return-follows-link t
