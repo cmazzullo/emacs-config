@@ -127,7 +127,7 @@
 
 ;; JAVASCRIPT ;;
 
-(setq js-indent-level 2)
+(setq js-indent-level 4)
 (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js-jsx-mode))
 
 
