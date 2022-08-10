@@ -154,14 +154,16 @@
   "Run a django shell buffer for the current project"
   (interactive)
   (let ((project-root (vc-root-dir)))
-    (run-python (concat "python -i " project-root "manage.py shell") nil t)))
+    (with-temp-buffer  ; need this to prevent weird eshell errors
+      (run-python (concat "python -i " project-root "manage.py shell") nil t))))
 
 (defun django-runserver ()
   "Run a django local server for the current project"
   (interactive)
   (let ((server-buffer "django-server")
-	 (cmd (concat "python -u " (vc-root-dir) "manage.py runserver")))
-    (display-buffer (python-shell-make-comint cmd server-buffer t nil))))
+	(cmd (concat "python -u " (vc-root-dir) "manage.py runserver")))
+    (with-temp-buffer  ; need this to prevent weird eshell errors
+       (python-shell-make-comint cmd server-buffer t nil))))
 
 
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
