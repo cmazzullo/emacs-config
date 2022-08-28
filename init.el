@@ -25,9 +25,13 @@
 
 ;;; Code:
 
-;; PACKAGES ;;
+;; REQUIRES ;;
 
 (require 'package)
+(require 'grep)
+(require 'vc)
+
+;; PACKAGES ;;
 
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'load-path "~/local/share/emacs/site-lisp")
@@ -124,7 +128,7 @@
 
 ;; JAVASCRIPT ;;
 
-(setq js-indent-level 2)
+(setq js-indent-level 4)
 (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js-jsx-mode))
 
 
@@ -134,7 +138,8 @@
 (setq whitespace-style '(face tabs lines-tail)) ; highlight long lines
 
 (elpy-enable)
-(setq elpy-rpc-timeout 2) ; increase timeout (seconds) for our slow computer
+(setq elpy-rpc-timeout 3 ; increase timeout (seconds) for our slow computer
+      elpy-rpc-virtualenv-path 'default)
 (add-hook 'elpy-mode-hook
 	  (lambda ()
 	    (define-key elpy-mode-map (kbd "M-q") 'elpy-black-fix-code)))
@@ -150,14 +155,16 @@
   "Run a django shell buffer for the current project"
   (interactive)
   (let ((project-root (vc-root-dir)))
-    (run-python (concat "python -i " project-root "manage.py shell") nil t)))
+    (with-temp-buffer  ; need this to prevent weird eshell errors
+      (run-python (concat "python -i " project-root "manage.py shell") nil t))))
 
 (defun django-runserver ()
   "Run a django local server for the current project"
   (interactive)
   (let ((server-buffer "django-server")
-	 (cmd (concat "python -u " (vc-root-dir) "manage.py runserver")))
-    (display-buffer (python-shell-make-comint cmd server-buffer t nil))))
+	(cmd (concat "python -u " (vc-root-dir) "manage.py runserver")))
+    (with-temp-buffer  ; need this to prevent weird eshell errors
+       (python-shell-make-comint cmd server-buffer t nil))))
 
 
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
@@ -191,7 +198,7 @@
       org-todo-keywords '((sequence "TODO(t)" "STUCK(s)" "|" "DONE(d)" "CANCELLED(c)"))
       org-todo-keyword-faces '(("CANCELLED" . "slategrey")
 			       ("STUCK" . "black"))
-      org-enforce-todo-dependencies t
+      org-enforce-todo-dependencies nil	; don't enforce dependencies, it's annoying
       org-log-done 'time ; Add a timestamp a task is marked DONE
       org-src-fontify-natively t ; Syntax highlighting in source code blocks
       org-return-follows-link t
