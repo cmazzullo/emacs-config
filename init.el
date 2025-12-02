@@ -74,6 +74,7 @@
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode)) ; Always treat .m as a matlab extension
 
 ;; shortcuts for git-grepping file types:
+(require 'grep)
 (mapc (lambda (x) (add-to-list 'grep-files-aliases x))
       '(("py" . "*.py")
 	("html" . "*.html")
@@ -207,5 +208,5 @@
       org-src-window-setup 'current-window  ;; edit source blocks in the same window
       org-src-preserve-indentation t  ;; prevents source blocks from indenting their content
       org-file-apps '((auto-mode . emacs)) ;; Always open org links in emacs (not firefox)
-      org-startup-truncated nil
-      org-hide-block-startup t) ; hide :BEGIN:/:END: blocks
+      org-startup-truncated t  ; truncate lines so tables look better
+      org-hide-block-startup t)  ; hide :BEGIN:/:END: blocks
