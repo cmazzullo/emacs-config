@@ -194,9 +194,9 @@
       org-startup-indented t
       org-agenda-include-diary t
       org-agenda-custom-commands '(("c" "TODOs + weekly" ((agenda "") (todo))))
-      org-todo-keywords '((sequence "TODO(t)" "STUCK(s)" "|" "DONE(d)" "CANCELLED(c)"))
+      org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANCELLED(c)"))
       org-todo-keyword-faces '(("CANCELLED" . "slategrey")
-			       ("STUCK" . "black"))
+			       ("WAIT" . "black"))
       org-enforce-todo-dependencies nil	; don't enforce dependencies, it's annoying
       org-log-done 'time ; Add a timestamp a task is marked DONE
       org-src-fontify-natively t ; Syntax highlighting in source code blocks
@@ -207,4 +207,5 @@
       org-src-window-setup 'current-window  ;; edit source blocks in the same window
       org-src-preserve-indentation t  ;; prevents source blocks from indenting their content
       org-file-apps '((auto-mode . emacs)) ;; Always open org links in emacs (not firefox)
-      org-startup-truncated nil)
+      org-startup-truncated nil
+      org-hide-block-startup t) ; hide :BEGIN:/:END: blocks
